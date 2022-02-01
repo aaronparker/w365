@@ -68,7 +68,7 @@ Describe "Script execution validation" -Tag "Windows" -ForEach $Scripts {
             Push-Location -Path $([System.IO.Path]::Combine($projectRoot))
             Write-Host "Running script: $($script.FullName)."
             $VerbosePreference = "Continue"
-            { $script.FullName } | Should -Not Throw
+            & $script.FullName | Should -Not Throw
             Pop-Location
         }
     }
