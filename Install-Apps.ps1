@@ -18,8 +18,9 @@ $Scripts = @(
     "https://raw.githubusercontent.com/aaronparker/packer/main/build/rds/10_Microsoft365Apps.ps1",
     "https://raw.githubusercontent.com/aaronparker/packer/main/build/rds/11_MicrosoftTeams.ps1",
     "https://raw.githubusercontent.com/aaronparker/packer/main/build/rds/12_MicrosoftOneDrive.ps1",
-    "https://raw.githubusercontent.com/aaronparker/packer/main/build/rds/39_AdobeAcrobatReaderDC.ps1"
+    "https://raw.githubusercontent.com/aaronparker/packer/main/build/rds/39_AdobeAcrobatReaderDC.ps1",
     #"https://raw.githubusercontent.com/aaronparker/packer/main/build/rds/98_MicrosoftOptimise.ps1"
+    "https://raw.githubusercontent.com/aaronparker/packer/main/build/common/Get-Installed.ps1"
 )
 
 ForEach ($Script in $Scripts) {
