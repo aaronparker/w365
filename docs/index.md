@@ -12,7 +12,7 @@ Build a quick and dirty gold image for Windows 365 or Azure Virtual Desktop.
 
 Running the [`Install-Apps.ps1`](Install-Apps.ps1) on a virtual machine deployed into Azure, will install and configure the following items:
 
-1. Set [regional settings](https://github.com/aaronparker/packer/blob/main/build/common/03_RegionLanguage.ps1) (currently supports en-AU, en-GB, en-US)
+1. Set [regional settings](https://github.com/aaronparker/packer/blob/main/build/common/03_RegionLanguage.ps1) (currently supports `en-AU`, `en-GB`, `en-US`)
 2. Configures [image customisations](https://stealthpuppy.com/image-customise) including the default profile, Start menu & taskbar
 3. Installs supported [Microsoft Visual C++ Redistributables](https://vcredist.com/)
 4. Installs the latest [Microsoft FSLogix Apps agent](https://github.com/aaronparker/packer/blob/main/build/rds/08_MicrosoftFSLogixApps.ps1)
