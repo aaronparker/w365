@@ -35,7 +35,7 @@ Describe "Script execution validation" -Tag "Windows" -ForEach $Scripts {
 
     Context "Validate <script.Name>." {
         It "<script.Name> should execute OK" {
-            & $script.FullName | Should -Not -Throw
+            { & $script.FullName } | Should -Not -Throw
         }
     }
 }
