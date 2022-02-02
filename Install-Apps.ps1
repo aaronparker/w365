@@ -80,5 +80,5 @@ Function Get-InstalledSoftware {
         }
     }
 }
-Get-InstalledSoftware | Format-Table
+Get-InstalledSoftware | Sort-Object -Property "Publisher" | Format-Table
 #endregion
