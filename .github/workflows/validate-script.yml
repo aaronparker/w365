@@ -12,6 +12,9 @@ on:
     paths:
       - 'Install-Apps.ps1'
       - '!src/VERSION.txt'
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '0 10 * * 2'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -45,7 +48,7 @@ jobs:
           git_committer_email: aaron@stealthpuppy.com
 
       # Run Pester tests
-      - name: Run Pester tests
+      - name: Validate Install-Apps.ps1 with Pester
         shell: powershell
         run: |
           . .\ci\Install.ps1
