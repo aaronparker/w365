@@ -29,22 +29,23 @@ theme:
   language: en
   features:
     - navigation.instant
-    #- navigation.top
+    - navigation.top
     #- navigation.tabs
     - navigation.expand
+    - toc.integrate
   palette:
-    - scheme: slate
-      primary: purple
-      accent: white
-      toggle:
-        icon: material/toggle-switch
-        name: Switch to light mode
     - scheme: default
       primary: purple
       accent: white
       toggle:
         icon: material/toggle-switch-off-outline
         name: Switch to dark mode
+    - scheme: slate
+      primary: purple
+      accent: white
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
   font:
     text: Roboto
     code: Roboto Mono

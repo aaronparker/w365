@@ -26,7 +26,7 @@ Running the [`Install-Apps.ps1`](Install-Apps.ps1) on a virtual machine deployed
 
 `03_RegionLanguage.ps1` will configure regional settings on the local machine, but will default to `en-AU`. To configure other regional settings, use the following command in the current PowerShell session, before running `Install-Apps.ps1`, with a value of `en-US`, or `en-GB`. For example:
 
-```powershell
+```powershell title="Set locale" linenums="1"
 $Env:Locale = "en-GB"
 ```
 
@@ -36,7 +36,7 @@ $Env:Locale = "en-GB"
 2. Optionally set the value of `Locale` as covered in the section above
 3. Run `Install-Apps.ps1` and install applications - copy the following command:
 
-    ```powershell
+    ```powershell title="Run Install-Apps.ps1" linenums="1"
     Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/aaronparker/w365/main/Install-Apps.ps1'))
     ```
 
