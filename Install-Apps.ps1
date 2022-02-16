@@ -1,6 +1,7 @@
 <#
-    Run application install scripts
+    Windows image preparation and application install
 #>
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingInvokeExpression", "")]
 [CmdletBinding()]
 param()
 
@@ -19,9 +20,7 @@ $Scripts = @(
     "https://raw.githubusercontent.com/aaronparker/packer/main/build/rds/11_MicrosoftTeams.ps1",
     "https://raw.githubusercontent.com/aaronparker/packer/main/build/rds/12_MicrosoftOneDrive.ps1",
     "https://raw.githubusercontent.com/aaronparker/packer/main/build/rds/39_AdobeAcrobatReaderDC.ps1"
-    #"https://raw.githubusercontent.com/aaronparker/packer/main/build/rds/98_MicrosoftOptimise.ps1"
 )
-
 ForEach ($Script in $Scripts) {
     Invoke-Expression -Command ((New-Object -TypeName "System.Net.WebClient").DownloadString($Script))
 }
