@@ -18,7 +18,7 @@ Else {
     $projectRoot = Resolve-Path -Path (((Get-Item (Split-Path -Parent -Path $MyInvocation.MyCommand.Definition)).Parent).FullName)
 }
 
-$Version = Get-Content -Path "$ProjectRoot/VERSION.TXT"
+$Version = Get-Content -Path $(Join-Path -Path $ProjectRoot -ChildPath "VERSION.TXT")
 If ($Null -ne $Version) {
     git tag v$Version
     git push origin --tags

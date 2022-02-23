@@ -59,3 +59,9 @@ jobs:
         shell: powershell
         run: |
           . .\ci\Deploy.ps1
+
+      # Push new tag
+      - name: Push new version tag
+        shell: powershell
+        run: |
+          . .\ci\Push-Tag.ps1
