@@ -20,6 +20,6 @@ Else {
 
 $Version = Get-Content -Path $(Join-Path -Path $ProjectRoot -ChildPath "VERSION.TXT")
 If ($Null -ne $Version) {
-    git tag v$Version
+    git tag v$Version -m v$Version
     git push origin --tags
 }
