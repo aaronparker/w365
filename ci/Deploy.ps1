@@ -52,6 +52,10 @@ try {
     git status
     git commit -s -m "$newVersion"
     Invoke-Process -FilePath "git" -ArgumentList "push origin main"
+
+    # Push new tag
+    git tag v$newVersion
+    Invoke-Process -FilePath "git" -ArgumentList "push origin main --tags"
 }
 catch {
     # Sad panda; it broke
