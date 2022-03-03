@@ -2,7 +2,7 @@
 
 [![Validate script](https://github.com/aaronparker/w365/actions/workflows/validate-script.yml/badge.svg)](https://github.com/aaronparker/w365/actions/workflows/validate-script.yml)
 
-Build a quick and dirty image for Windows 365 with [`Install-Apps.ps1`](Install-Apps.ps1). This script will perform the following changes:
+Build a quick and dirty image for Windows 365 with [`Install.ps1`](Install.ps1). This script will perform the following changes:
 
 1. Set regional settings (currently supports en-AU, en-GB, en-US)
 2. Configures [image customisations](https://stealthpuppy.com/image-customise) including the default profile, Start menu & taskbar

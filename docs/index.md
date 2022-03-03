@@ -10,7 +10,7 @@ Build a quick and dirty gold image for Windows 365 or Azure Virtual Desktop.
 
 ## Quick install
 
-Running the [`Install-Apps.ps1`](Install-Apps.ps1) on a virtual machine deployed into Azure, will install and configure the following items:
+Running the [`Install.ps1`](Install.ps1) on a virtual machine deployed into Azure, will install and configure the following items:
 
 1. Set [regional settings](https://github.com/aaronparker/packer/blob/main/build/common/03_RegionLanguage.ps1) (currently supports `en-AU`, `en-GB`, `en-US`)
 2. Configures [image customisations](https://stealthpuppy.com/image-customise) including the default profile, Start menu & taskbar
@@ -37,7 +37,7 @@ $Env:Locale = "en-GB"
 3. Run `Install-Apps.ps1` and install applications - copy the following command:
 
     ```powershell title="Run Install-Apps.ps1" linenums="1"
-    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/aaronparker/w365/main/Install-Apps.ps1'))
+    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/aaronparker/w365/main/Install.ps1'))
     ```
 
 4. Paste the code into the PowerShell prompt that you have chosen to run as administrator

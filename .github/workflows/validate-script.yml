@@ -5,8 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'Install-Apps.ps1'
-      - '!src/VERSION.txt'
+      - 'Install.ps1'
   schedule:
     - cron:  '0 10 * * 2'
   workflow_dispatch:
@@ -21,8 +20,14 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      # Run Install.ps1
+      - name: Run Install.ps1
+        shell: powershell
+        run: |
+          . .\Install.ps1
+
       # Run Pester tests
-      - name: Validate Install-Apps.ps1 with Pester
+      - name: Validate with Pester
         shell: powershell
         run: |
           . .\ci\Install.ps1

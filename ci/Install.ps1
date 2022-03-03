@@ -7,21 +7,13 @@
 param()
 
 # Set variables
-If (Test-Path -Path env:GITHUB_WORKSPACE -ErrorAction "SilentlyContinue") {
-    $projectRoot = Resolve-Path -Path $env:GITHUB_WORKSPACE
-}
-Else {
-    # Local Testing
-    $projectRoot = Resolve-Path -Path (((Get-Item (Split-Path -Parent -Path $MyInvocation.MyCommand.Definition)).Parent).FullName)
-}
-$tests = Join-Path $projectRoot "tests"
-$output = Join-Path $projectRoot "TestsResults.xml"
+$tests = Join-Path -Path $env:GITHUB_WORKSPACE -ChildPath "tests"
+$output = Join-Path -Path $env:GITHUB_WORKSPACE -ChildPath "TestsResults.xml"
 
 # Echo variables
 Write-Host ""
 Write-Host "OS version:      $((Get-CimInstance -ClassName "CIM_OperatingSystem").Caption)"
-Write-Host ""
-Write-Host "ProjectRoot:     $projectRoot."
+Write-Host "Project root:    $env:GITHUB_WORKSPACE."
 Write-Host "Tests path:      $tests."
 Write-Host "Output path:     $output."
 

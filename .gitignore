@@ -1,12 +1,3 @@
-# Cache objects
-packer_cache/
-
-# Crash log
-crash.log
-
-# For built boxes
-*.box
-
 # OS generated files #
 ######################
 .DS_Store
@@ -16,9 +7,3 @@ crash.log
 .Trashes
 ehthumbs.db
 Thumbs.db
-
-# Azure Functions artifacts
-bin
-obj
-appsettings.json
-local.settings.json
