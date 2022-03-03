@@ -21,21 +21,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Import GPG key
-      - name: Import GPG key
-        id: import_gpg
-        uses: crazy-max/ghaction-import-gpg@v4
-        with:
-          gpg_private_key: ${{ secrets.GPGKEY }}
-          passphrase: ${{ secrets.GPGPASSPHRASE }}
-          git_user_signingkey: true
-          git_commit_gpgsign: true
-          git_config_global: true
-          git_tag_gpgsign: true
-          git_push_gpgsign: false
-          git_committer_name: ${{ secrets.COMMIT_USER }}
-          git_committer_email: ${{ secrets.COMMIT_EMAIL }}
-
       # Run Pester tests
       - name: Validate Install-Apps.ps1 with Pester
         shell: powershell
@@ -71,5 +56,5 @@ jobs:
         shell: bash
         run: |
           DATEF=`date +%Y.%m.%d`
-          git tag -a "v$DATEF.$(GITHUB_RUN_NUMBER)" -m "Validate script v$DATEF.$(GITHUB_RUN_NUMBER)"
-          git push origin "v$DATEF.$(GITHUB_RUN_NUMBER)"
+          git tag -a "v$DATEF.$GITHUB_RUN_NUMBER" -m "Validate script v$DATEF.$GITHUB_RUN_NUMBER"
+          git push origin "v$DATEF.$GITHUB_RUN_NUMBER"
