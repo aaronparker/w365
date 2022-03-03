@@ -72,21 +72,63 @@ BeforeDiscovery {
     # Get the Software list; Output the installed software to the pipeline for Packer output
     Write-Host " Export software list to: $SoftwareFile."
     $Software = Get-InstalledSoftware | Sort-Object -Property "Publisher", "Version"
-
-    # Get the scripts to test
-    $EdgeCurrent = Get-EvergreenApp -Name "MicrosoftEdge" | Where-Object { $_.Architecture -eq "x64" -and $_.Channel -eq "Stable" -and $_.Release -eq "Enterprise" } `
-    | Sort-Object -Property @{ Expression = { [System.Version]$_.Version }; Descending = $true } | Select-Object -First 1
 }
 
 # Per script tests
 Describe "Validate installed applications" {
     BeforeAll {
+        # Microsoft FSLogix Apps
+        $FSLogixCurrent = Get-EvergreenApp -Name "AdobeAcrobatReaderDC" | Where-Object { $_.Language -eq $Language -and $_.Architecture -eq $Architecture } | `
+            Select-Object -First 1
+        $FSLogixInstalled = $Software | Where-Object { $_.Name -eq "Microsoft FSLogix Apps" } | Select-Object -First 1
+        
+        # Microsoft Edge
         $EdgeInstalled = $Software | Where-Object { $_.Name -eq "Microsoft Edge" }
+        $EdgeCurrent = Get-EvergreenApp -Name "MicrosoftEdge" | Where-Object { $_.Architecture -eq "x64" -and $_.Channel -eq "Stable" -and $_.Release -eq "Enterprise" } | `
+            Sort-Object -Property @{ Expression = { [System.Version]$_.Version }; Descending = $true } | Select-Object -First 1
+
+        # Teams Machine-Wide Installer
+        $TeamsCurrent = Get-EvergreenApp -Name "MicrosoftTeams" | Where-Object { $_.Architecture -eq "x64" -and $_.Ring -eq "General" -and $_.Type -eq "msi" } | `
+            Select-Object -First 1
+        $TeamsInstalled = $Software | Where-Object { $_.Name -eq "Teams Machine-Wide Installer" }
+
+        # Office 16 Click-to-Run Licensing Component
+        $OfficeCurrent = Get-EvergreenApp -Name "Microsoft365Apps" | Where-Object { $_.Channel -eq "Current" } | Select-Object -First 1
+        $OfficeInstalled = $Software | Where-Object { $_.Name -eq "Office 16 Click-to-Run Licensing Component" }
+
+        # Adobe Acrobat DC (64-bit)
+        $ReaderCurrent = Get-EvergreenApp -Name "AdobeAcrobatReaderDC" | Where-Object { $_.Language -eq $Language -and $_.Architecture -eq $Architecture } | `
+            Select-Object -First 1
+        $ReaderInstalled = $Software | Where-Object { $_.Name -eq "Adobe Acrobat DC (64-bit)" }
+    }
+
+    Context "Validate Microsoft FSLogix Apps" {
+        It "Should be the current version" {
+            [System.Version]$FSLogixInstalled.Version -eq [System.Version]$FSLogixCurrent.Version  | Should -Be $True
+        }
     }
 
     Context "Validate Microsoft Edge" {
         It "Should be the current version" {
             [System.Version]$EdgeInstalled.Version -eq [System.Version]$EdgeCurrent.Version  | Should -Be $True
+        }
+    }
+
+    Context "Validate Microsoft Teams" {
+        It "Should be the current version" {
+            [System.Version]$TeamsInstalled.Version -eq [System.Version]$TeamsCurrent.Version  | Should -Be $True
+        }
+    }
+
+    Context "Validate Microsoft 365 Apps" {
+        It "Should be the current version" {
+            [System.Version]$OfficeInstalled.Version -eq [System.Version]$OfficeCurrent.Version  | Should -Be $True
+        }
+    }
+
+    Context "Validate Adobe Acrobat" {
+        It "Should be the current version" {
+            [System.Version]$ReaderInstalled.Version -eq [System.Version]$ReaderCurrent.Version  | Should -Be $True
         }
     }
 }
