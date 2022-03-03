@@ -26,11 +26,22 @@ jobs:
         run: |
           . .\Install.ps1
 
+      # List installed software
+      - name: List installed software
+        shell: powershell
+        run: |
+          . .\Get-Installed.ps1
+
+      # Install modules
+      - name: Install modules
+        shell: powershell
+        run: |
+          . .\ci\Install.ps1
+
       # Run Pester tests
       - name: Validate with Pester
         shell: powershell
         run: |
-          . .\ci\Install.ps1
           . .\ci\Tests.ps1
 
   tag:

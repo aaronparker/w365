@@ -70,7 +70,6 @@ BeforeDiscovery {
     #endregion
 
     # Get the Software list; Output the installed software to the pipeline for Packer output
-    Write-Host " Export software list to: $SoftwareFile."
     $Software = Get-InstalledSoftware | Sort-Object -Property "Publisher", "Version"
 }
 
@@ -104,31 +103,31 @@ Describe "Validate installed applications" {
 
     Context "Validate Microsoft FSLogix Apps" {
         It "Should be the current version" {
-            [System.Version]$FSLogixInstalled.Version -eq [System.Version]$FSLogixCurrent.Version  | Should -Be $True
+            [System.Version]$FSLogixInstalled.Version -eq [System.Version]$FSLogixCurrent.Version | Should -Be $True
         }
     }
 
     Context "Validate Microsoft Edge" {
         It "Should be the current version" {
-            [System.Version]$EdgeInstalled.Version -eq [System.Version]$EdgeCurrent.Version  | Should -Be $True
+            [System.Version]$EdgeInstalled.Version -eq [System.Version]$EdgeCurrent.Version | Should -Be $True
         }
     }
 
     Context "Validate Microsoft Teams" {
         It "Should be the current version" {
-            [System.Version]$TeamsInstalled.Version -eq [System.Version]$TeamsCurrent.Version  | Should -Be $True
+            [System.Version]$TeamsInstalled.Version -eq [System.Version]$TeamsCurrent.Version | Should -Be $True
         }
     }
 
     Context "Validate Microsoft 365 Apps" {
         It "Should be the current version" {
-            [System.Version]$OfficeInstalled.Version -eq [System.Version]$OfficeCurrent.Version  | Should -Be $True
+            [System.Version]$OfficeInstalled.Version -eq [System.Version]$OfficeCurrent.Version | Should -Be $True
         }
     }
 
     Context "Validate Adobe Acrobat" {
         It "Should be the current version" {
-            [System.Version]$ReaderInstalled.Version -eq [System.Version]$ReaderCurrent.Version  | Should -Be $True
+            [System.Version]$ReaderInstalled.Version -eq [System.Version]$ReaderCurrent.Version | Should -Be $True
         }
     }
 }
