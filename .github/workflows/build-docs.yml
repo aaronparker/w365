@@ -1,4 +1,4 @@
-name: mkdocs-ci
+name: build-mkdocs
 on:
   push:
     paths:

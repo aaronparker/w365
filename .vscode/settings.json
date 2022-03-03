@@ -1,11 +1,15 @@
 {
     "cSpell.words": [
+        "codeql",
         "DATEF",
         "ghaction",
         "GPGKEY",
         "GPGPASSPHRASE",
         "gpgsign",
         "linenums",
+        "mkdocs",
+        "psscriptanalyzer",
+        "sarif",
         "signingkey"
     ]
 }

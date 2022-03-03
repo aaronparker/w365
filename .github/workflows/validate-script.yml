@@ -1,4 +1,4 @@
-name: Validate script
+name: validate-script
 
 on:
   push:
