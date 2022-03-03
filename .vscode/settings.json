@@ -1,5 +1,11 @@
 {
     "cSpell.words": [
-        "linenums"
+        "DATEF",
+        "ghaction",
+        "GPGKEY",
+        "GPGPASSPHRASE",
+        "gpgsign",
+        "linenums",
+        "signingkey"
     ]
 }

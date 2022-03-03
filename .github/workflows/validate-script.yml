@@ -1,10 +1,5 @@
 name: Validate script
 
-# Environment variables
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-# Controls when the action will run. 
 on:
   push:
     branches:
@@ -13,24 +8,18 @@ on:
       - 'Install-Apps.ps1'
       - '!src/VERSION.txt'
   schedule:
-    # * is a special character in YAML so you have to quote this string
     - cron:  '0 10 * * 2'
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     branches:
         - main
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   validate:
     runs-on: windows-2022
-    #runs-on: windows-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       # Import GPG key
       - name: Import GPG key
@@ -44,8 +33,8 @@ jobs:
           git_config_global: true
           git_tag_gpgsign: true
           git_push_gpgsign: false
-          git_committer_name: Aaron Parker
-          git_committer_email: aaron@stealthpuppy.com
+          git_committer_name: ${{ secrets.COMMIT_USER }}
+          git_committer_email: ${{ secrets.COMMIT_EMAIL }}
 
       # Run Pester tests
       - name: Validate Install-Apps.ps1 with Pester
@@ -54,14 +43,33 @@ jobs:
           . .\ci\Install.ps1
           . .\ci\Tests.ps1
 
-      # Update version number in VERSION.txt
-      - name: Update version number and push to repo
-        shell: powershell
-        run: |
-          . .\ci\Deploy.ps1
+  tag:
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Push new tag
-      - name: Push new version tag
-        shell: powershell
+      # Import GPG key
+      - name: Import GPG key
+        id: import_gpg
+        uses: crazy-max/ghaction-import-gpg@v4
+        with:
+          gpg_private_key: ${{ secrets.GPGKEY }}
+          passphrase: ${{ secrets.GPGPASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+          git_config_global: true
+          git_tag_gpgsign: true
+          git_push_gpgsign: false
+          git_committer_name: ${{ secrets.COMMIT_USER }}
+          git_committer_email: ${{ secrets.COMMIT_EMAIL }}
+
+      # Push tag
+      - name: Push tag
+        shell: bash
         run: |
-          . .\ci\Push-Tag.ps1
+          DATEF=`date +%Y.%m.%d`
+          git tag -a "v$DATEF.$(GITHUB_RUN_NUMBER)" -m "Validate script v$DATEF.$(GITHUB_RUN_NUMBER)"
+          git push origin "v$DATEF.$(GITHUB_RUN_NUMBER)"
