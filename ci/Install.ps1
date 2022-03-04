@@ -29,10 +29,10 @@ If (Get-PSRepository -Name "PSGallery" | Where-Object { $_.InstallationPolicy -n
 }
 
 # Install modules
-$Modules = "Pester", "posh-git"
+$Modules = "Pester"
 ForEach ($Module in $Modules ) {
     If ([System.Version]((Find-Module -Name $Module).Version) -gt (Get-Module -Name $Module).Version) {
-        Install-Module -Name $Module -SkipPublisherCheck -Force #-MaximumVersion "4.10.1"
+        Install-Module -Name $Module -SkipPublisherCheck -Force
     }
     Import-Module -Name $Module -Force
 }

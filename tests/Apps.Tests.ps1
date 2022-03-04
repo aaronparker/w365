@@ -1,6 +1,6 @@
 <#
     .SYNOPSIS
-        Main Pester function tests.
+        Use Pester and Evergreen to validate installed apps.
 #>
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingWriteHost", "")]
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseDeclaredVarsMoreThanAssignments", "")]
@@ -80,7 +80,7 @@ Describe "Validate installed applications" {
         $FSLogixCurrent = Get-EvergreenApp -Name "AdobeAcrobatReaderDC" | Where-Object { $_.Language -eq $Language -and $_.Architecture -eq $Architecture } | `
             Select-Object -First 1
         $FSLogixInstalled = $Software | Where-Object { $_.Name -eq "Microsoft FSLogix Apps" } | Select-Object -First 1
-        
+
         # Microsoft Edge
         $EdgeInstalled = $Software | Where-Object { $_.Name -eq "Microsoft Edge" }
         $EdgeCurrent = Get-EvergreenApp -Name "MicrosoftEdge" | Where-Object { $_.Architecture -eq "x64" -and $_.Channel -eq "Stable" -and $_.Release -eq "Enterprise" } | `
