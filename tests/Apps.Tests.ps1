@@ -77,57 +77,57 @@ BeforeDiscovery {
 Describe "Validate installed applications" {
     BeforeAll {
         # Microsoft FSLogix Apps
-        $FSLogixCurrent = Get-EvergreenApp -Name "AdobeAcrobatReaderDC" | Where-Object { $_.Language -eq $Language -and $_.Architecture -eq $Architecture } | `
+        $FSLogixInstalled = $Software | Where-Object { $_.Name | Should -Be "Microsoft FSLogix Apps" } | Select-Object -First 1
+        $FSLogixCurrent = Get-EvergreenApp -Name "AdobeAcrobatReaderDC" | Where-Object { $_.Language | Should -Be $Language -and $_.Architecture | Should -Be $Architecture } | `
             Select-Object -First 1
-        $FSLogixInstalled = $Software | Where-Object { $_.Name -eq "Microsoft FSLogix Apps" } | Select-Object -First 1
 
         # Microsoft Edge
-        $EdgeInstalled = $Software | Where-Object { $_.Name -eq "Microsoft Edge" }
-        $EdgeCurrent = Get-EvergreenApp -Name "MicrosoftEdge" | Where-Object { $_.Architecture -eq "x64" -and $_.Channel -eq "Stable" -and $_.Release -eq "Enterprise" } | `
+        $EdgeInstalled = $Software | Where-Object { $_.Name | Should -Be "Microsoft Edge" } | Select-Object -First 1
+        $EdgeCurrent = Get-EvergreenApp -Name "MicrosoftEdge" | Where-Object { $_.Architecture | Should -Be "x64" -and $_.Channel | Should -Be "Stable" -and $_.Release | Should -Be "Enterprise" } | `
             Sort-Object -Property @{ Expression = { [System.Version]$_.Version }; Descending = $true } | Select-Object -First 1
 
         # Teams Machine-Wide Installer
-        $TeamsCurrent = Get-EvergreenApp -Name "MicrosoftTeams" | Where-Object { $_.Architecture -eq "x64" -and $_.Ring -eq "General" -and $_.Type -eq "msi" } | `
+        $TeamsInstalled = $Software | Where-Object { $_.Name | Should -Be "Teams Machine-Wide Installer" } | Select-Object -First 1
+        $TeamsCurrent = Get-EvergreenApp -Name "MicrosoftTeams" | Where-Object { $_.Architecture | Should -Be "x64" -and $_.Ring | Should -Be "General" -and $_.Type | Should -Be "msi" } | `
             Select-Object -First 1
-        $TeamsInstalled = $Software | Where-Object { $_.Name -eq "Teams Machine-Wide Installer" }
 
         # Office 16 Click-to-Run Licensing Component
-        $OfficeCurrent = Get-EvergreenApp -Name "Microsoft365Apps" | Where-Object { $_.Channel -eq "Current" } | Select-Object -First 1
-        $OfficeInstalled = $Software | Where-Object { $_.Name -eq "Office 16 Click-to-Run Licensing Component" }
+        $OfficeInstalled = $Software | Where-Object { $_.Name | Should -Be "Office 16 Click-to-Run Licensing Component" } | Select-Object -First 1
+        $OfficeCurrent = Get-EvergreenApp -Name "Microsoft365Apps" | Where-Object { $_.Channel | Should -Be "Current" } | Select-Object -First 1
 
         # Adobe Acrobat DC (64-bit)
-        $ReaderCurrent = Get-EvergreenApp -Name "AdobeAcrobatReaderDC" | Where-Object { $_.Language -eq $Language -and $_.Architecture -eq $Architecture } | `
+        $ReaderInstalled = $Software | Where-Object { $_.Name | Should -Be "Adobe Acrobat DC (64-bit)" } | Select-Object -First 1
+        $ReaderCurrent = Get-EvergreenApp -Name "AdobeAcrobatReaderDC" | Where-Object { $_.Language | Should -Be $Language -and $_.Architecture | Should -Be $Architecture } | `
             Select-Object -First 1
-        $ReaderInstalled = $Software | Where-Object { $_.Name -eq "Adobe Acrobat DC (64-bit)" }
     }
 
     Context "Validate Microsoft FSLogix Apps" {
         It "Should be the current version" {
-            [System.Version]$FSLogixInstalled.Version -eq [System.Version]$FSLogixCurrent.Version | Should -Be $True
+            [System.Version]$FSLogixInstalled.Version | Should -Be [System.Version]$FSLogixCurrent.Version
         }
     }
 
     Context "Validate Microsoft Edge" {
         It "Should be the current version" {
-            [System.Version]$EdgeInstalled.Version -eq [System.Version]$EdgeCurrent.Version | Should -Be $True
+            [System.Version]$EdgeInstalled.Version | Should -Be [System.Version]$EdgeCurrent.Version
         }
     }
 
     Context "Validate Microsoft Teams" {
         It "Should be the current version" {
-            [System.Version]$TeamsInstalled.Version -eq [System.Version]$TeamsCurrent.Version | Should -Be $True
+            [System.Version]$TeamsInstalled.Version | Should -Be [System.Version]$TeamsCurrent.Version
         }
     }
 
     Context "Validate Microsoft 365 Apps" {
         It "Should be the current version" {
-            [System.Version]$OfficeInstalled.Version -eq [System.Version]$OfficeCurrent.Version | Should -Be $True
+            [System.Version]$OfficeInstalled.Version | Should -Be [System.Version]$OfficeCurrent.Version
         }
     }
 
     Context "Validate Adobe Acrobat" {
         It "Should be the current version" {
-            [System.Version]$ReaderInstalled.Version -eq [System.Version]$ReaderCurrent.Version | Should -Be $True
+            [System.Version]$ReaderInstalled.Version | Should -Be [System.Version]$ReaderCurrent.Version
         }
     }
 }

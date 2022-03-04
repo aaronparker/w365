@@ -59,4 +59,4 @@ Function Get-InstalledSoftware {
 #endregion
 
 # Get the Software list; Output the installed software to the pipeline for Packer output
-Get-InstalledSoftware | Sort-Object -Property "Publisher", "Version"
+Get-InstalledSoftware | Sort-Object -Property "Publisher", "Name", "Version"
