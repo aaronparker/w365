@@ -30,7 +30,7 @@ jobs:
       - name: List installed software
         shell: powershell
         run: |
-          . .\Get-Installed.ps1
+          . .\ci\Get-Installed.ps1
 
       # Install modules
       - name: Install modules
