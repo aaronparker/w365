@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'Install.ps1'
+      - 'tests/**'
   schedule:
     - cron:  '0 10 * * 2'
   workflow_dispatch:
