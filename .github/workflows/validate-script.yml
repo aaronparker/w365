@@ -26,6 +26,7 @@ jobs:
         uses: potatoqualitee/psmodulecache@v4.5
         with:
           modules-to-cache: Pester, VcRedist, Evergreen
+          shell: powershell
 
       # Run Install.ps1
       - name: Run Install.ps1
