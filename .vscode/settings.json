@@ -2,14 +2,20 @@
     "cSpell.words": [
         "codeql",
         "DATEF",
+        "getinstalledsoftware",
         "ghaction",
         "GPGKEY",
         "GPGPASSPHRASE",
         "gpgsign",
         "linenums",
         "mkdocs",
+        "potatoqualitee",
+        "psmodulecache",
         "psscriptanalyzer",
+        "pushtag",
+        "runinstall",
         "sarif",
-        "signingkey"
+        "signingkey",
+        "validatepester"
     ]
 }

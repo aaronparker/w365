@@ -21,26 +21,35 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install and cache PowerShell modules
+        id: psmodulecache
+        uses: potatoqualitee/psmodulecache@v4.5
+        with:
+          modules-to-cache: Pester, VcRedist, Evergreen
+
       # Run Install.ps1
       - name: Run Install.ps1
+        id: runinstall
         shell: powershell
         run: |
           . .\Install.ps1
 
       # List installed software
       - name: List installed software
+        id: getinstalledsoftware
         shell: powershell
         run: |
           . .\ci\Get-Installed.ps1
 
-      # Install modules
-      - name: Install modules
-        shell: powershell
-        run: |
-          . .\ci\Install.ps1
+      # # Install modules
+      # - name: Install modules
+      #   shell: powershell
+      #   run: |
+      #     . .\ci\Install.ps1
 
       # Run Pester tests
       - name: Validate with Pester
+        id: validatepester
         shell: powershell
         run: |
           . .\ci\Tests.ps1
@@ -70,6 +79,7 @@ jobs:
 
       # Push tag
       - name: Push tag
+        id: pushtag
         shell: bash
         run: |
           DATEF=`date +%Y.%m.%d`
