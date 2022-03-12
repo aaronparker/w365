@@ -10,7 +10,6 @@ param()
 BeforeDiscovery {
 
     # Get the list of software to test
-    # Get path
     if ([System.String]::IsNullOrWhiteSpace($env:GITHUB_WORKSPACE)) {
         $Path = $PWD.Path
     }
@@ -89,9 +88,6 @@ Describe -Name "Validate installed <App.Name>" -ForEach $Applications {
         $App = $_
         $Latest = Invoke-Expression -Command $App.Filter
         $Installed = $InstalledSoftware | Where-Object { $_.Name -eq $App.Installed } | Select-Object -First 1
-        Write-Host "Testing $($App.Name)."
-        Write-Host "Installed: $($Installed.Version)."
-        Write-Host "Latest: $($Latest.Version)."
     }
 
     Context "Validate <App.Installed> is installed" {
