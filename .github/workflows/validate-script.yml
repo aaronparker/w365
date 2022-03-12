@@ -42,18 +42,12 @@ jobs:
         run: |
           . .\ci\Get-Installed.ps1
 
-      # # Install modules
-      # - name: Install modules
-      #   shell: powershell
-      #   run: |
-      #     . .\ci\Install.ps1
-
       # Run Pester tests
       - name: Validate with Pester
         id: validatepester
         shell: powershell
         run: |
-          . .\ci\Tests.ps1
+          . .\ci\Invoke-Tests.ps1
 
   tag:
     needs: validate
