@@ -1,6 +1,6 @@
 # Windows 365
 
-[![Validate script](https://github.com/aaronparker/w365/actions/workflows/validate-script.yml/badge.svg)](https://github.com/aaronparker/w365/actions/workflows/validate-script.yml)
+[![validate-Install.ps1](https://github.com/aaronparker/w365/actions/workflows/validate-Install.ps1.yml/badge.svg)](https://github.com/aaronparker/w365/actions/workflows/validate-Install.ps1.yml)
 
 Build a quick and dirty image for Windows 365 with [`Install.ps1`](Install.ps1). This script will perform the following changes:
 
@@ -13,3 +13,5 @@ Build a quick and dirty image for Windows 365 with [`Install.ps1`](Install.ps1).
 7. Installs the latest version of Microsoft Teams
 8. Installs the latest version of Microsoft OneDrive
 9. Installs the latest version of Adobe Acrobat Reader DC
+
+Full documentation is found here: [stealthpuppy.com/w365](https://stealthpuppy.com/w365).
