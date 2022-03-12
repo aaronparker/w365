@@ -5,6 +5,11 @@
         "Installed": "Microsoft FSLogix Apps"
     },
     {
+        "Name": "MicrosoftFSLogixAppsRuleEditor",
+        "Filter": "Get-EvergreenApp -Name \"MicrosoftFSLogixApps\" | Where-Object { $_.Channel -eq \"Production\" } | Select-Object -First 1",
+        "Installed": "Microsoft FSLogix Apps RuleEditor"
+    },
+    {
         "Name": "MicrosoftEdge",
         "Filter": "Get-EvergreenApp -Name \"MicrosoftEdge\" | Where-Object { $_.Architecture -eq \"x64\" -and $_.Channel -eq \"Stable\" -and $_.Release -eq \"Enterprise\" } | Sort-Object -Property \"Version\" -Descending | Select-Object -First 1",
         "Installed": "Microsoft Edge"
