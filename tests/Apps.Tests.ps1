@@ -2,11 +2,10 @@
     .SYNOPSIS
         Use Pester and Evergreen to validate installed apps.
 #>
-#[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingWriteHost", "")]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingWriteHost", "")]
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseDeclaredVarsMoreThanAssignments", "")]
 [CmdletBinding()]
 param()
-
 
 BeforeDiscovery {
     #region Functions
@@ -87,9 +86,11 @@ Describe -Name "Validate installed <App.Name>" -ForEach $Applications {
 
         # Get details for the current application
         $App = $_
-        Write-Host "Getting details for $($App.Name)."
         $Latest = Invoke-Expression -Command $App.Filter
         $Installed = $InstalledSoftware | Where-Object { $_.Name -eq $App.Installed } | Select-Object -First 1
+        Write-Host "Testing $($App.Name)."
+        Write-Host "Installed: $($Installed.Version)."
+        Write-Host "Latest: $($Latest.Version)."
     }
 
     Context "Validate <App.Installed> is installed" {
