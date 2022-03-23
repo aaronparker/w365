@@ -1,7 +1,5 @@
 # Windows 365
 
-[![validate-Install.ps1](https://github.com/aaronparker/w365/actions/workflows/validate-Install.ps1.yml/badge.svg)](https://github.com/aaronparker/w365/actions/workflows/validate-Install.ps1.yml)
-
 Build a quick and dirty image for Windows 365 with [`Install.ps1`](Install.ps1). This script will perform the following changes:
 
 1. Set regional settings (currently supports en-AU, en-GB, en-US)
@@ -15,3 +13,7 @@ Build a quick and dirty image for Windows 365 with [`Install.ps1`](Install.ps1).
 9. Installs the latest version of Adobe Acrobat Reader DC
 
 Full documentation is found here: [stealthpuppy.com/w365](https://stealthpuppy.com/w365).
+
+[![validate-Install.ps1](https://github.com/aaronparker/w365/actions/workflows/validate-Install.ps1.yml/badge.svg)](https://github.com/aaronparker/w365/actions/workflows/validate-Install.ps1.yml)
+
+[![powershell-analysis](https://github.com/aaronparker/w365/actions/workflows/powershell-analysis.yml/badge.svg)](https://github.com/aaronparker/w365/actions/workflows/powershell-analysis.yml)

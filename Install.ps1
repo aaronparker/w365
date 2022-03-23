@@ -25,7 +25,7 @@ $Scripts = @(
     "https://raw.githubusercontent.com/aaronparker/packer/main/build/rds/39_AdobeAcrobatReaderDC.ps1"
 )
 foreach ($Script in $Scripts) {
-    
+
     try {
         Invoke-Expression -Command ((New-Object -TypeName "System.Net.WebClient").DownloadString($Script))
     }
