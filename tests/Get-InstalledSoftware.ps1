@@ -29,7 +29,7 @@ function Get-InstalledSoftware {
             $Apps += Get-ItemProperty -Path $Key -Name $propertyNames -ErrorAction "SilentlyContinue" | `
                 . { process { if ($Null -ne $_.DisplayName) { $_ } } } | `
                 Where-Object { $_.SystemComponent -ne 1 } | `
-                Select-Object -Property "DisplayName", "DisplayVersion", "Publisher", "UninstallString", @{n = "RegistryPath"; e = { $_.PSPath -replace "Microsoft.PowerShell.Core\\Registry::", "" } }, "PSChildName", "WindowsInstaller", "InstallDate", "InstallSource", "HelpLink", "Language", "EstimatedSize" | `
+                Select-Object -Property @{n = "Name"; e = { $_.DisplayName} }, @{n = "Version"; e = { $_.DisplayVersion} }, "Publisher", "UninstallString", @{n = "RegistryPath"; e = { $_.PSPath -replace "Microsoft.PowerShell.Core\\Registry::", "" } }, "PSChildName", "WindowsInstaller", "InstallDate", "InstallSource", "HelpLink", "Language", "EstimatedSize" | `
                 Sort-Object -Property "DisplayName", "Publisher"
         }
         catch {
