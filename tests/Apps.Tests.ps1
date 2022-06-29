@@ -14,7 +14,7 @@ BeforeDiscovery {
     if ([System.String]::IsNullOrWhiteSpace($env:GITHUB_WORKSPACE)) {
         $Path = $PWD.Path
     }
-    Else {
+    else {
         $Path = $env:GITHUB_WORKSPACE
     }
     Write-Host "Read input file: $([System.IO.Path]::Combine($Path, "tests", "Apps.json"))."
@@ -26,58 +26,47 @@ Describe -Name "Validate installed <App.Name>" -ForEach $Applications {
     BeforeAll {
 
         #region Functions
-        Function Get-InstalledSoftware {
-            <#
-        .SYNOPSIS
-            Retrieves a list of all software installed
-
-        .EXAMPLE
-            Get-InstalledSoftware
-
-            This example retrieves all software installed on the local computer
-
-        .PARAMETER Name
-            The software title you'd like to limit the query to.
-
-        .NOTES
-            Author: Adam Bertram
-            URL: https://4sysops.com/archives/find-the-product-guid-of-installed-software-with-powershell/
-    #>
-            [OutputType([System.Management.Automation.PSObject])]
+        function Get-InstalledSoftware {
             [CmdletBinding()]
-            param (
-                [Parameter()]
-                [ValidateNotNullOrEmpty()]
-                [System.String] $Name
-            )
-
-            $UninstallKeys = "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall", "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
-            $null = New-PSDrive -Name HKU -PSProvider Registry -Root Registry::HKEY_USERS
-            $UninstallKeys += Get-ChildItem HKU: -ErrorAction SilentlyContinue | Where-Object { $_.Name -match 'S-\d-\d+-(\d+-){1,14}\d+$' } | `
-                ForEach-Object { "HKU:\$($_.PSChildName)\Software\Microsoft\Windows\CurrentVersion\Uninstall" }
-            if (-not $UninstallKeys) {
-                Write-Verbose -Message "$($MyInvocation.MyCommand): No software registry keys found."
+            param ()
+            try {
+                $params = @{
+                    PSProvider  = "Registry"
+                    Name        = "HKU"
+                    Root        = "HKEY_USERS"
+                    ErrorAction = "SilentlyContinue"
+                }
+                New-PSDrive @params | Out-Null
             }
-            else {
-                foreach ($UninstallKey in $UninstallKeys) {
-                    if ($PSBoundParameters.ContainsKey('Name')) {
-                        $WhereBlock = { ($_.PSChildName -match '^{[A-Z0-9]{8}-([A-Z0-9]{4}-){3}[A-Z0-9]{12}}$') -and ($_.GetValue('DisplayName') -like "$Name*") }
-                    }
-                    else {
-                        $WhereBlock = { ($_.PSChildName -match '^{[A-Z0-9]{8}-([A-Z0-9]{4}-){3}[A-Z0-9]{12}}$') -and ($_.GetValue('DisplayName')) }
-                    }
-                    $gciParams = @{
-                        Path        = $UninstallKey
-                        ErrorAction = 'SilentlyContinue'
-                    }
-                    $selectProperties = @(
-                        @{n = 'Publisher'; e = { $_.GetValue('Publisher') } },
-                        @{n = 'Name'; e = { $_.GetValue('DisplayName') } },
-                        @{n = 'Version'; e = { $_.GetValue('DisplayVersion') } }
-                    )
-                    Get-ChildItem @gciParams | Where-Object $WhereBlock | Select-Object -Property $selectProperties
+            catch {
+                throw $_.Exception.Message
+            }
+        
+            $UninstallKeys = @(
+                "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*",
+                "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*"
+            )
+            $UninstallKeys += Get-ChildItem -Path "HKU:" | Where-Object { $_.Name -match "S-\d-\d+-(\d+-){1,14}\d+$" } | ForEach-Object {
+                "HKU:\$($_.PSChildName)\Software\Microsoft\Windows\CurrentVersion\Uninstall\*"
+            }
+            
+            $Apps = @()
+            foreach ($Key in $UninstallKeys) {
+                try {
+                    $propertyNames = "DisplayName", "DisplayVersion", "Publisher", "UninstallString", "PSPath", "WindowsInstaller", "InstallDate", "InstallSource", "HelpLink", "Language", "EstimatedSize", "SystemComponent"
+                    $Apps += Get-ItemProperty -Path $Key -Name $propertyNames -ErrorAction "SilentlyContinue" | `
+                        . { process { if ($Null -ne $_.DisplayName) { $_ } } } | `
+                        Where-Object { $_.SystemComponent -ne 1 } | `
+                        Select-Object -Property "DisplayName", "DisplayVersion", "Publisher", "UninstallString", @{n = "RegistryPath"; e = { $_.PSPath -replace "Microsoft.PowerShell.Core\\Registry::", "" } }, "PSChildName", "WindowsInstaller", "InstallDate", "InstallSource", "HelpLink", "Language", "EstimatedSize" | `
+                        Sort-Object -Property "DisplayName", "Publisher"
+                }
+                catch {
+                    throw $_.Exception.Message
                 }
             }
+        
+            Remove-PSDrive -Name "HKU" -ErrorAction "SilentlyContinue" | Out-Null
+            return $Apps
         }
         #endregion
 

@@ -9,7 +9,6 @@
 param()
 
 BeforeDiscovery {
-
     $Scripts = @(
         "https://raw.githubusercontent.com/aaronparker/packer/main/build/rds/03_RegionLanguage.ps1",
         "https://stealthpuppy.com/image-customise/Install.ps1",
@@ -34,7 +33,7 @@ Describe -Name "Validate script <Script>" -ForEach $Scripts {
 
     Context "Validate <Script> exists" {
         It "Should be a valid URL" {
-            {try { $r = (New-Object -TypeName "System.Net.WebClient").DownloadString($Script) } catch { Throw }} | Should -Not -Throw
+            { try { $r = (New-Object -TypeName "System.Net.WebClient").DownloadString($Script) } catch { throw $_.Exception.Message } } | Should -Not -Throw
         }
     }
 }

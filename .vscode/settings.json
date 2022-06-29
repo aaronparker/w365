@@ -1,12 +1,14 @@
 {
     "cSpell.words": [
         "codeql",
+        "COMPUTERNAME",
         "DATEF",
         "getinstalledsoftware",
         "ghaction",
         "GPGKEY",
         "GPGPASSPHRASE",
         "gpgsign",
+        "HKEY",
         "linenums",
         "mkdocs",
         "potatoqualitee",
