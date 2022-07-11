@@ -15,6 +15,11 @@
         "Installed": "Microsoft Edge"
     },
     {
+        "Name": "MicrosoftOneDrive",
+        "Filter": "Get-EvergreenApp -Name \"MicrosoftOneDrive\" | Where-Object { $_.Ring -eq \"Production\" -and $_.Type -eq \"Exe\" -and $_.Architecture -eq \"AMD64\" } | Sort-Object -Property @{ Expression = { [System.Version]$_.Version }; Descending = $true } | Select-Object -First 1",
+        "Installed": "Microsoft OneDrive"
+    },
+    {
         "Name": "MicrosoftTeams",
         "Filter": "Get-EvergreenApp -Name \"MicrosoftTeams\" | Where-Object { $_.Ring -eq \"General\" -and $_.Architecture -eq \"x64\" -and $_.Type -eq \"msi\" } | Select-Object -First 1",
         "Installed": "Teams Machine-Wide Installer"
